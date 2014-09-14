@@ -50,7 +50,9 @@ function post(request, response) {
 
 function del(request, response) {
 	console.log("DELETE:: Logout from the server");
-	login.logout(response.body.session_id);
+	var cookies=request.cookies;
+	var sessionId=cookies.session_id;
+	login.logout(sessionId);
  	// TODO: remove session id via login.logout(xxx)
  	// No need to set session id in the response cookies since you just logged out!
 

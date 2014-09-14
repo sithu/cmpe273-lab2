@@ -66,7 +66,9 @@ Login.prototype.login = function(_name, _email) {
 Login.prototype.RefreshSession = function(_sessionId)
 {
 	//this.sessionMap[_sessionId]=null;
-	this.cookies['+_sessionId+']=null;
+console.log(_sessionId);
+delete this.sessionMap[_sessionId];
+//	this.cookies['+_sessionId+']=null;
 	return "done";
 };
 
@@ -75,6 +77,9 @@ Login.prototype.RefreshSession = function(_sessionId)
  */ 
 Login.prototype.logout = function(sessionId) {
 	console.log('logout::' + sessionId);
+console.log(sessionId);
+delete this.sessionMap[sessionId];
+
    /*
 	* TODO: Remove the given sessionId from the sessionMap
 	*/
