@@ -19,7 +19,7 @@ if(this.sessionMap[sessionId]==null)
 }
 else
 {
-	return 'Hello, Sir ' + this.sessionMap[sessionId].name + ' --- ' + this.sessionMap[sessionId].email;
+	return 'Hello, ' + this.sessionMap[sessionId].name;
 }
 };
 /**
@@ -50,10 +50,7 @@ Login.prototype.isLoggedIn = function(sessionId) {
  * Create a new session id for the given user.
  */
 Login.prototype.login = function(_name, _email) {
-   /*
-	* Generate unique session id and set it into sessionMap like foo@bar.com
-	*/
-	var sessionId = new Date().getTime();
+   	var sessionId = new Date().getTime();
 	this.sessionMap[sessionId] = { name: _name, email: _email } 
 	console.log("inside login functionwh ich take email \n")
 	console.log('\n new session id ' + sessionId + ' for login::' + _email);
@@ -61,14 +58,12 @@ Login.prototype.login = function(_name, _email) {
 };
 
 /**
- * Remove specific refreshed session
+ * Remove specific refreshed session from SessionMap
  **/
 Login.prototype.RefreshSession = function(_sessionId)
 {
-	//this.sessionMap[_sessionId]=null;
-console.log(_sessionId);
-delete this.sessionMap[_sessionId];
-//	this.cookies['+_sessionId+']=null;
+	// Delete the session id from sessionMap 
+	delete this.sessionMap[_sessionId];
 	return "done";
 };
 
@@ -77,12 +72,9 @@ delete this.sessionMap[_sessionId];
  */ 
 Login.prototype.logout = function(sessionId) {
 	console.log('logout::' + sessionId);
-console.log(sessionId);
-delete this.sessionMap[sessionId];
+	// Delete the session id from sessionMap 
+	delete this.sessionMap[sessionId];
 
-   /*
-	* TODO: Remove the given sessionId from the sessionMap
-	*/
 };
 
 // Export the Login class

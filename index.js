@@ -36,51 +36,37 @@ function get(request, response) {
 };
 
 function post(request, response) {
-	// TODO: read 'name and email from the request.body'
-	// var newSessionId = login.login('xxx', 'xxx@gmail.com');
-	// TODO: set new session id to the 'session_id' cookie in the response
-	// replace "Logged In" response with response.end(login.hello(newSessionId));
-	//console.log("inside post method");
 	var name=request.body.name;
 	var email=request.body.email;
 	var newSessionId=login.login(name,email);
 	response.end("\nLogged In....\n welcome="+name+" with email id ="+email+"\n\n New session_id="+response.end(login.hello(newSessionId)));
-//console.log("post method end....*****///")
 };
 
 function del(request, response) {
 	console.log("DELETE:: Logout from the server");
+	// Taking cookies from response	
 	var cookies=request.cookies;
+	// Get session id from cookies
 	var sessionId=cookies.session_id;
+	// Performed logout process	
 	login.logout(sessionId);
- 	// TODO: remove session id via login.logout(xxx)
- 	// No need to set session id in the response cookies since you just logged out!
-
   	response.end('Logged out from the server\n');
 };
 
 function put(request, response) {
 	console.log("PUT:: Re-generate new seesion_id for the same user");
-	// TODO: refresh session id; similar to the post() function
-var cookies=request.cookies;
-var sessionId=cookies.session_id;
-var OldName=login.getName(sessionId);
-var OldEmail=login.getEmail(sessionId);
-console.log(" Name--->"+OldName+" Email--->"+OldEmail);
-//response.end(" Name--->"+OldName+" Email--->"+OldEmail);
-console.log("PUT:: Re-generate new session_id for the same user");
+	var cookies=request.cookies;
+	var sessionId=cookies.session_id;
+	// Taking data from sessionId from sessionMap	
+	var OldName=login.getName(sessionId);
+	var OldEmail=login.getEmail(sessionId);
+	console.log("PUT:: Re-generate new session_id for the same user");
+	// Generate New Session ID and store New Session ID	
 	var newSessionId = login.login(OldName, OldEmail);
 	response.setHeader('Set-Cookie', 'session_id=' + newSessionId);
+	// Remove Old Session ID from sessionMap
         var temp=login.RefreshSession(sessionId);
-	//cookies['session_id'] = null;
-	//cookies.sessionId=null;
-       	response.end("Re-freshed session id\n");
-/*var oldName=this.sessionMap[sessionId].name;
-var oldEmail=this.sessionMap[sessionId].email;
-console.log("got session id=\n"+sessionId+"\n Name="+oldName+" Email="+oldEmail);
-response.end("got session id=\n"+sessionId+"\n Name="+oldName+" Email="+oldEmail);*/
-
-//	response.end("Re-freshed session id\n"+request.cookies['session_id']);
+	response.end("Re-freshed session id\n");
 };
 
 app.listen(8000);
