@@ -1,4 +1,4 @@
-cmpe273-lab2
+Node.js Cookie Bases Authentication System
 ============
 
 Node.JS with [Connect]
